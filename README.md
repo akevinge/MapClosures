@@ -90,6 +90,19 @@ map_closure_pipeline -v
 ![Visualizer](https://github.com/user-attachments/assets/34aa2b2f-c0ce-4dfb-a0e0-cbcc04487a5a)
 </details>
 
+<details>
+<summary>
+Providing the -e flag will run the evaluation pipeline:
+
+```sh
+# This example uses ROS bags.
+map_closure_pipeline -gt <ground_truth_topic> -e <bag_path> <results_dir>
+```
+</summary>
+
+</details>
+
+
 ## Citation
 
 If you use this library for any academic work, please cite our original [paper](https://www.ipb.uni-bonn.de/pdfs/gupta2024icra.pdf).

@@ -150,8 +150,16 @@ def map_closure_pipeline(
     ),
     topic: Optional[str] = typer.Option(
         None,
-        "--topic",
-        "-t",
+        "--pcd_topic",
+        "-pt",
+        show_default=False,
+        help="[Optional] Only valid when processing rosbag files",
+        rich_help_panel="Additional Options",
+    ),
+    gt_topic: Optional[str] = typer.Option(
+        None,
+        "--gt_topic",
+        "-gt",
         show_default=False,
         help="[Optional] Only valid when processing rosbag files",
         rich_help_panel="Additional Options",
@@ -197,6 +205,7 @@ def map_closure_pipeline(
             # Additional options
             sequence=sequence,
             topic=topic,
+            gt_topic=gt_topic,
             meta=meta,
         ),
         config_path=config,
