@@ -1,0 +1,5 @@
+services:
+  map_closures:
+    build: .
+    volumes:
+      - .:/map_closures
