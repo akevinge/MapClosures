@@ -50,6 +50,7 @@ def get_segment_indices(poses, sampling_distance):
 
 
 def get_global_points(dataset, indices, poses):
+    print(indices)
     global_points = []
     for index, pose in zip(indices, poses):
         try:

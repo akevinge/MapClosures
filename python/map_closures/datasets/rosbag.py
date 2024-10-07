@@ -28,6 +28,8 @@ from typing import Sequence, Any
 import natsort
 import numpy as np
 
+from tqdm import tqdm
+
 
 def quaternion_rotation_matrix(Q):
     """
@@ -152,19 +154,23 @@ class RosbagDataset:
         filtered_gt_poses: list[Any] = []
         if len(gt_poses) > self.n_scans:
             print(
-                "[WARNING] The number of GT poses is greater than the number of scans in the bagfile. A GT pose will be selected by nearest timestamp for each scan."
+                "[WARNING] The number of ground truth poses is greater than the number of scans in the bagfile. A GT pose will be selected by nearest timestamp for each scan."
             )
 
             scan_msg_it = self.get_scan_msg_iterator()
-            for _ in range(self.n_scans):
-                # Get the timestamp of next scan message.
-                _, scan_timestamp, _ = next(scan_msg_it)
+            with tqdm(
+                total=self.n_scans, desc="Selecting ground truth poses by nearest timestamp"
+            ) as pbar:
+                for _ in range(self.n_scans):
+                    # Get the timestamp of next scan message.
+                    _, scan_timestamp, _ = next(scan_msg_it)
 
-                # Find the nearest GT pose to the scan timestamp.
-                nearest_idx = np.argmin(np.abs(gt_timestamps - scan_timestamp))
+                    # Find the nearest GT pose to the scan timestamp.
+                    nearest_idx = np.argmin(np.abs(gt_timestamps - scan_timestamp))
 
-                # Append the nearest GT pose to the filtered GT poses list.
-                filtered_gt_poses.append(gt_poses[nearest_idx])
+                    # Append the nearest GT pose to the filtered GT poses list.
+                    filtered_gt_poses.append(gt_poses[nearest_idx])
+                    pbar.update(1)
 
             print("[INFO] GT poses filtered by nearest timestamp.")
             assert len(filtered_gt_poses) == self.n_scans
