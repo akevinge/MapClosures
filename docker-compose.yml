@@ -3,3 +3,4 @@ services:
     build: .
     volumes:
       - .:/map_closures
+      - /storage/bags:/bags

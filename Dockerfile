@@ -16,7 +16,10 @@ RUN apt update -y && \
     libtbb-dev
 
 # Runtime dependencies found here: https://github.com/PRBonn/MapClosures/blob/main/README.md#Install.
-RUN pip install kiss-icp==1.0.0
+RUN pip install \
+    kiss-icp==1.0.0 \
+    rosbags==0.10.4 \
+    matplotlib==3.9.2
 
 COPY docker/entrypoint.sh /opt/entrypoint.sh
 
